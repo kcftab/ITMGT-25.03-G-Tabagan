@@ -24,20 +24,22 @@ def main():
         "frappuccino":{"quantity":0},
     }
     while True:
-        code = input("Input the order code or type '/' to exit. ")
-        if code == "/":
+        order = input("Input the order code or type '/' to exit. ")
+        if order == "/":
             print("Receipt will now be printed.")
             break
-        elif code == "americano" or code == "brewedcoffee" or code == "cappuccino" or code == "dalgona" or code == "espresso" or code == "frappuccino":
-            orderdict[code]["quantity"] += 1
         else:
-            print("Please enter a valid input.")
+            code = order.split(",")[0]
+            if code == "americano" or code == "brewedcoffee" or code == "cappuccino" or code == "dalgona" or code == "espresso" or code == "frappuccino":
+                orderdict[code]["quantity"] += int(order.split(",")[1])
+            else:
+                print("Please enter a valid input.")
     
     
     with open("receipt.txt.","w") as f:
         f.write('''
 ==
-CODE\t\t\tNAME\t\t\tQUANTITY\t\t\tSUBTOTAL
+CODE\t\t\t\tNAME\t\t\tQUANTITY\t\t\tSUBTOTAL
 ''')
         for code in list(orderdict.keys()):
             if orderdict[code]["quantity"] > 0:
